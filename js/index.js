@@ -5,11 +5,11 @@ var qrscanner = Class(function () {
     // }
 
     this.scanBarCode = function () {
-        NATIVE.plugins.sendEvent("QRScanner", "scanBarCode", JSON.stringify({}));
+        NATIVE.plugins.sendEvent("QRScannerPlugin", "scanBarCode", JSON.stringify({}));
     }
 
     this.scanQRCode = function () {
-        NATIVE.plugins.sendEvent("QRScanner", "scanQRCode", JSON.stringify({}));
+        NATIVE.plugins.sendEvent("QRScannerPlugin", "scanQRCode", JSON.stringify({}));
     }
 });
 

@@ -1,6 +1,6 @@
 {
     "copyFiles": [
-    "QRScanner.java"
+    "QRScannerPlugin.java"
   ],
     "libraries": [
   ],

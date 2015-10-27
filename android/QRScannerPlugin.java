@@ -19,14 +19,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class QRScanner implements IPlugin {
+public class QRScannerPlugin implements IPlugin {
 
 	private String TAG = "{admob}";
 	private static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 	private Activity mActivity;
 
-	public void QRScanner() {}
-	public void onCreateApplication(Context applicationContext) {}
+	public void QRScannerPlugin() {}
+	// public void onCreateApplication(Context applicationContext) {}
 
 
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
@@ -48,7 +48,9 @@ public class QRScanner implements IPlugin {
 
 	public void setInstallReferrer(String referrer) {}
 
-	public void onActivityResult(Integer request, Integer result, Intent data) {}
+	public void onActivityResult(Integer request, Integer result, Intent data) {
+		android.util.Log.d("Tiendv", "onActivityResult ===============");
+	}
 
 	public boolean consumeOnBackPressed() {
 		return true;
@@ -86,9 +88,9 @@ public class QRScanner implements IPlugin {
 		try {
 			Intent intent = new Intent(ACTION_SCAN);
 			intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
-			startActivityForResult(intent, 0);
+			mActivity.startActivityForResult(intent, 0);
 		} catch (ActivityNotFoundException anfe) {
-			showDialog(QRScanner.this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
+			showDialog(mActivity, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
 		}		
 	}
 	
@@ -97,9 +99,9 @@ public class QRScanner implements IPlugin {
 		try {
 			Intent intent = new Intent(ACTION_SCAN);
 			intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-			startActivityForResult(intent, 0);
+			mActivity.startActivityForResult(intent, 0);
 		} catch (ActivityNotFoundException anfe) {
-			showDialog(QRScanner.this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
+			showDialog(mActivity, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
 		}
 	}
 	
@@ -125,15 +127,15 @@ public class QRScanner implements IPlugin {
 		return downloadDialog.show();
 	}
 	
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		if (requestCode == 0) {
-			if (resultCode == RESULT_OK) {
-				String contents = intent.getStringExtra("SCAN_RESULT");
-				String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+	// public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		// if (requestCode == 0) {
+			// if (resultCode == RESULT_OK) {
+				// String contents = intent.getStringExtra("SCAN_RESULT");
+				// String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
-				Toast toast = Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_LONG);
-				toast.show();
-			}
-		}
-	}	
+				// Toast toast = Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_LONG);
+				// toast.show();
+			// }
+		// }
+	// }	
 }
