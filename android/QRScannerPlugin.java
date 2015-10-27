@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,7 @@ public class QRScannerPlugin implements IPlugin {
 	private Activity mActivity;
 
 	public void QRScannerPlugin() {}
-	// public void onCreateApplication(Context applicationContext) {}
+	public void onCreateApplication(Context applicationContext) {}
 
 
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class QRScannerPlugin implements IPlugin {
 	public void setInstallReferrer(String referrer) {}
 
 	public void onActivityResult(Integer request, Integer result, Intent data) {
-		android.util.Log.d("Tiendv", "onActivityResult ===============");
+		android.util.Log.d("Tiendv", "onActivityResult =============== request:  " + request.toString() + " -- result: "+ result.toString());
 	}
 
 	public boolean consumeOnBackPressed() {
