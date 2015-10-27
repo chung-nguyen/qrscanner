@@ -5,7 +5,8 @@
     "libraries": [
   ],
     "jars": [
-      "google-play-services.jar"
+      "google-play-services.jar",
+	  "core-3.2.0.jar"
   ],
     "injectionXML": "manifest.xml",
     "injectionXSL": "manifest.xsl"
