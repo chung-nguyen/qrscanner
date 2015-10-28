@@ -25,9 +25,24 @@ public class QRScannerPlugin implements IPlugin {
 	private String TAG = "{admob}";
 	private static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 	private Activity mActivity;
+	private Context mContext;
+	
+	public class ScanResult extends com.tealeaf.event.Event {
+		String contents;
+		String format;
+		
+		public ScanResult (String contents, String format) {
+		  	super("ScanResult");
+			
+			this.contents = contents;
+			this.format = format;
+		}
+	  }
 
 	public void QRScannerPlugin() {}
-	public void onCreateApplication(Context applicationContext) {}
+	public void onCreateApplication(Context applicationContext) {
+		mContext = applicationContext;
+	}
 
 
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
@@ -48,10 +63,6 @@ public class QRScannerPlugin implements IPlugin {
 	public void onNewIntent(Intent intent) {}
 
 	public void setInstallReferrer(String referrer) {}
-
-	public void onActivityResult(Integer request, Integer result, Intent data) {
-		android.util.Log.d("Tiendv", "onActivityResult =============== request:  " + request.toString() + " -- result: "+ result.toString());
-	}
 
 	public boolean consumeOnBackPressed() {
 		return true;
@@ -128,15 +139,19 @@ public class QRScannerPlugin implements IPlugin {
 		return downloadDialog.show();
 	}
 	
-	// public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		// if (requestCode == 0) {
-			// if (resultCode == RESULT_OK) {
-				// String contents = intent.getStringExtra("SCAN_RESULT");
-				// String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+	public void onActivityResult(Integer requestCode, Integer resultCode, Intent intent) {
+		if (requestCode == 0) {
+			final String contents = intent.getStringExtra("SCAN_RESULT");
+			final String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
-				// Toast toast = Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_LONG);
-				// toast.show();
-			// }
-		// }
-	// }	
+			/*mActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					Toast toast = Toast.makeText(mContext, "Content:" + contents + " Format:" + format, Toast.LENGTH_LONG);
+					toast.show();
+				}
+			});*/
+			
+			EventQueue.pushEvent(new ScanResult(contents, format));
+		}
+	}	
 }
